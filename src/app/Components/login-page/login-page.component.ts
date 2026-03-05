@@ -20,19 +20,29 @@ empcode: string = '';
  errorMessage: string = '';
  constructor(private authService: ApiService,
              private router: Router) {}
+
+ngOnInit(){
+
+}
  onLogin() {
    const loginData = {
-     empcode: this.empcode,
+     Email: this.empcode,
      password: this.password
    };
+   debugger
    this.authService.Login(loginData).subscribe({
+    
      next: (res: any) => {
        if (this.rememberMe) {
          localStorage.setItem('token', res.token);
+          this.authService.setUserFromToken(res.token)
+     
        } else {
          sessionStorage.setItem('token', res.token);
+          this.authService.setUserFromToken(res.token)
        }
-       this.router.navigate(['/dashboard']);
+       
+       this.router.navigate(['/Homepage']);
        console.log("success",res)
      },
      error: (err) => {
