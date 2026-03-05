@@ -25,6 +25,9 @@ ngOnInit(){
 
 }
  onLogin() {
+   localStorage.clear();
+    sessionStorage.clear();
+
    const loginData = {
      Email: this.empcode,
      password: this.password
@@ -39,7 +42,7 @@ ngOnInit(){
      
        } else {
          sessionStorage.setItem('token', res.token);
-          this.authService.setUserFromToken(res.token)
+         this.authService.setUserFromToken(res.token)
        }
        
        this.router.navigate(['/Homepage']);

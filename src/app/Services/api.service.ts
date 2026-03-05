@@ -7,7 +7,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class ApiService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) {
+this.restoreUser();
+   }
   baseurl='https://localhost:7283/api/Auth';
 
   Login(data:any):Observable<any>{
@@ -16,24 +18,52 @@ export class ApiService {
 
   private currentUserSubject=new BehaviorSubject<any>(null);
  public currentUser$=this.currentUserSubject.asObservable()
-
 setUserFromToken(token: string) {
-  const payload = JSON.parse(atob(token.split('.')[1]));
+
+  const payload: any = JSON.parse(atob(token.split('.')[1]));
+
   const user = {
-    empcode: payload.Empcode,
-    name: payload.unique_name
+    empCode: payload.EmpCode,
+    name: payload.Name,      // ClaimTypes.Name
+    department: payload.Department,
+    role: payload.Role,             // ClaimTypes.Role
+    email: payload.Email,           // ClaimTypes.Email
+    venderCost: payload.VenderCost,
+    costCenter: payload.CostCenter
   };
+
   this.currentUserSubject.next(user);
+
+  // Store token only (recommended)
+  localStorage.setItem('token', token);
 }
-loadUserFromStorage() {
+  // 🔥 Auto restore after refresh
+  loadUserFromStorage() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.setUserFromToken(token);
+    }
+  }
+  restoreUser() {
   const token = localStorage.getItem('token');
   if (token) {
     this.setUserFromToken(token);
   }
 }
-logout() {
-  localStorage.removeItem('token');
-  this.currentUserSubject.next(null)
-
+isLoggedIn(): boolean {
+  return this.currentUserSubject.value != null;
 }
+  getCurrentUser() {
+    return this.currentUserSubject.value;
+  }
+
+  // isLoggedIn(): boolean {
+  //   return !!localStorage.getItem('token');
+  // }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.currentUserSubject.next(null);
+  }
+
 }
