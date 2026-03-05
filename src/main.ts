@@ -1,6 +1,25 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
+import { importProvidersFrom } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';   // ✅ for routing
+import { routes } from './app/app.routes';         // ✅ import your routes array
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { cogIcon } from '@cds/core/icon/shapes/cog.js';
+import { appConfig } from './app/app.config';
+// Optional: Clarity imports if you use Clarity Design System
+// import '@cds/core/styles';
+// import '@cds/core/button/register.js';
+// import '@cds/core/icon/register.js';
+// import { ClarityIcons } from '@cds/core/icon';
+// import { cogIcon } from '@cds/core/icon/shapes/cog.js';
+// ClarityIcons.addIcons(cogIcon);
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(),
+    provideRouter(routes),
+     [provideAnimations(), ...appConfig.providers]   // ✅ register routes here
+  ]
+}).catch(err => console.error(err));
