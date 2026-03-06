@@ -31,7 +31,7 @@ export interface Personal{
 })
 export class HomepageComponent {
 constructor(private api:ApiService,private router:Router){}
-
+username:string='';
 showPersonalModal = false;
 
 personl:Personal={
@@ -57,8 +57,10 @@ User:any={};
     const now = new Date();
     const today= now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     this.personl.today=today 
-
+  
  
+const Users=this.api.User
+    this.username=Users.res.name;
 
 
 

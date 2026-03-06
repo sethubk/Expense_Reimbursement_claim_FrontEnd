@@ -1,5 +1,44 @@
+<div class="main-container">
+  
+  <div class="content-container">
+    <clr-vertical-nav [clrVerticalNavCollapsible]="true" >
+      
+      <clr-vertical-nav-group routerLinkActive="active">
+        <a routerLink="#" hidden aria-hidden="true"></a>
 
-<div class="header1">
+        Expense
+        <clr-vertical-nav-group-children *clrIfExpanded="true">
+          <a clrVerticalNavLink routerLink="./normal/pidgey" routerLinkActive="active">New Expense</a>
+          <a clrVerticalNavLink routerLink="./normal/snorlax" routerLinkActive="active">Exlaims claim</a>
+        </clr-vertical-nav-group-children>
+      </clr-vertical-nav-group>
+      <clr-vertical-nav-group routerLinkActive="active">
+        <a routerLink="#" hidden aria-hidden="true"></a>
+      
+        International
+        <clr-vertical-nav-group-children *clrIfExpanded>
+          <a clrVerticalNavLink routerLink="#" routerLinkActive="active">New International</a>
+          <a clrVerticalNavLink routerLink="#" routerLinkActive="active">International claims</a>
+        </clr-vertical-nav-group-children>
+      </clr-vertical-nav-group>
+      <clr-vertical-nav-group routerLinkActive="active">
+        <a routerLink="#" hidden aria-hidden="true"></a>
+       
+        Domestic
+        <clr-vertical-nav-group-children *clrIfExpanded>
+          <a clrVerticalNavLink routerLink="#" routerLinkActive="active">New Domestic</a>
+          <a clrVerticalNavLink routerLink="#" routerLinkActive="active">Domestic Claims</a>
+        </clr-vertical-nav-group-children>
+      </clr-vertical-nav-group>
+      <a clrVerticalNavLink routerLinkActive="active" routerLink="./dashboard">
+       
+        Dashboard
+      </a>
+    </clr-vertical-nav>
+    <!-- right side -->
+    <div class="content-area">
+      <!-- <h3>Welcome! {{username}}</h3> -->
+     <div class="header1">
   <h1>Expense reimbursement claim form </h1>
 </div>
 
@@ -134,3 +173,6 @@
 </div>  
 
   
+    </div>
+  </div>
+</div>

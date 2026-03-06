@@ -168,3 +168,30 @@ clr-datagrid{
   height:400px;
  overflow-x: auto;
 }
+
+.main-container{
+  overflow: hidden;
+  
+ 
+}
+
+/* .content-container {
+  display: flex;
+  height: calc(100vh - 75%); 
+ 
+} */
+
+/* clr-vertical-nav {
+  width: 25%;
+  min-width: 250px;
+  overflow-y: auto; 
+ */
+
+/* .content-area {
+  width: 75%;
+  overflow-y: auto; 
+  padding: 1rem;
+   overflow: hidden;
+} */
+
+

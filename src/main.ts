@@ -13,13 +13,14 @@ import { appConfig } from './app/app.config';
 // import '@cds/core/icon/register.js';
 // import { ClarityIcons } from '@cds/core/icon';
 // import { cogIcon } from '@cds/core/icon/shapes/cog.js';
-// ClarityIcons.addIcons(cogIcon);
-
+ClarityIcons.addIcons(cogIcon);
+import { ClarityIcons, userIcon } from '@cds/core/icon';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(),
     provideRouter(routes),
-     [provideAnimations(), ...appConfig.providers]   // ✅ register routes here
+     [provideAnimations(), ...appConfig.providers]  ,
+      // ✅ register routes here
   ]
 }).catch(err => console.error(err));
