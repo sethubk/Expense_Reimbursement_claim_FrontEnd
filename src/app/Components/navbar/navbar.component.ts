@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../../Services/api.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
@@ -19,9 +20,17 @@ export class NavbarComponent {
   ) {}
 
   ngOnInit() {
-    this.authService.currentUser$.subscribe(user => {
-      this.user = user.Name; // Assuming the user object has a 'Name' property
-    });
+ const userString = sessionStorage.getItem("User");
+  
+//  if (userString) {
+//     const userObj = JSON.parse(userString);   // convert string → object
+// console.log("userdasdas",userObj)
+//     this.user = userObj.name;  // or userObj.name depending on your response
+//   }
+ const Users=this.authService.User
+    this.user=Users.res;
+    console.log(this.user);
+
   }
 
   toggleDropdown() {
@@ -30,14 +39,14 @@ export class NavbarComponent {
 
   logout() {
 
-    // 🔥 Clear everything
+    // // 🔥 Clear everything
     localStorage.clear();
     sessionStorage.clear();
 
-    this.authService.logout();
+    // //this.authService.logout();
 
-    // 🔥 Redirect to login
-    this.router.navigate(['/login']);
+    // // 🔥 Redirect to login
+    this.router.navigate(['/']);
   }
 
 

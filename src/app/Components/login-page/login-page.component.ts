@@ -22,27 +22,28 @@ empcode: string = '';
              private router: Router) {}
 
 ngOnInit(){
-
+sessionStorage.clear();
+localStorage.clear()
 }
  onLogin() {
-   localStorage.clear();
-    sessionStorage.clear();
-
    const loginData = {
      Email: this.empcode,
      password: this.password
    };
-   debugger
+
    this.authService.Login(loginData).subscribe({
     
      next: (res: any) => {
        if (this.rememberMe) {
-         localStorage.setItem('token', res.token);
-          this.authService.setUserFromToken(res.token)
+         localStorage.setItem('token', res);
+        
      
        } else {
-         sessionStorage.setItem('token', res.token);
-         this.authService.setUserFromToken(res.token)
+         sessionStorage.setItem('User', JSON.stringify({
+          res
+         }));
+         
+          
        }
        
        this.router.navigate(['/Homepage']);

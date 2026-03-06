@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { ApiService } from './Services/api.service';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
@@ -13,5 +13,10 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'ClaimForm';
-  constructor(public authService: ApiService) {}
+  user:string='';
+  constructor(public authService: ApiService,public router:Router) {
+
+    const Users=this.authService.getCurrentUser
+    this.user=Users.name;
+  }
 }

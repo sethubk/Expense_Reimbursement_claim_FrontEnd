@@ -53,15 +53,12 @@ dataSource:Expense[]=[
 User:any={};
 
   ngOnInit(){
-    debugger
+    
     const now = new Date();
     const today= now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     this.personl.today=today 
 
-   this.api.currentUser$.subscribe(user => {
-    this.User = user;
-    console.log("user",this.User)
-  });
+ 
 
 
 
