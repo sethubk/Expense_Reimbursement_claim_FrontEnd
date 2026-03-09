@@ -1,39 +1,63 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Employee } from '../Components/Models/claimmodels';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-User:any={}
+User:Employee={
+  today: '',
+  username: '',
+  employeeCode: '',
+  purposePlace: '',
+  companyPlant: '',
+  costCenter: '',
+  venderCost: ''
+}
+
   constructor(private http:HttpClient) {
 this.loadUserFromSession();
+
    }
   baseurl='https://localhost:7283/api/Auth';
 
   Login(data:any):Observable<any>{
     return this.http.post(`${this.baseurl}/Login`,data)
   }
- private currentUserSubject = new BehaviorSubject<any>(null);
- currentUser$ = this.currentUserSubject.asObservable();
+//  private currentUserSubject = new BehaviorSubject<any>(null);
+//  currentUser$ = this.currentUserSubject.asObservable();
 
- setUser(user: any) {
-   this.currentUserSubject.next(user);
- }
+//  setUser(user: any) {
+//    this.currentUserSubject.next(user);
+//  }
  loadUserFromSession() {
    const user = sessionStorage.getItem('User');
    if (user) {
-    const userObj = JSON.parse(user);   // convert string → object
+    const userObj = JSON.parse(user);
+    const User=userObj.res;
+
+    this.User.username=User.name;
+  this.User.employeeCode=User.empCode;
+  this.User.venderCost=User.venderCost;
+  this.User.costCenter=User.costCenter;
+  this.User.companyPlant="Nordex"
+       // convert string → object
 console.log("USers from session ",userObj)
-    this.User = userObj
+  console.log("USers",this.User);
    }
  }
- getCurrentUser() {
-   return this.currentUserSubject.value;
- }
+//  getCurrentUser() {
+//    return this.currentUserSubject.value;
+//  }
  
-
+GetEmployee(){
+  const user=sessionStorage.getItem('Employee');
+   if (user) {
+    const userObj = JSON.parse(user);
+    this.User=userObj.res;}
+}
 
 
 }

@@ -4,6 +4,7 @@ import { FormsModule ,NgForm} from '@angular/forms';
 import { ClarityModule } from '@clr/angular';
 import { ApiService } from '../../Services/api.service';
 import { Router } from '@angular/router';
+import { Employee } from '../Models/claimmodels';
 
 export interface Expense {
   type: 'International' | 'Domestic' | '' | string;
@@ -50,17 +51,25 @@ empcode :string ='emp001';
 dataSource:Expense[]=[
  ];
  
-User:any={};
+User:Employee={
+  today: '',
+  username: '',
+  employeeCode: '',
+  purposePlace: '',
+  companyPlant: '',
+  costCenter: '',
+  venderCost: '',
+ 
+};
 
   ngOnInit(){
     
     const now = new Date();
     const today= now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-    this.personl.today=today 
-  
- 
-const Users=this.api.User
-    this.username=Users.res.name;
+    
+
+   this.User=this.api.User;
+   this.User.today=today 
 
 
 
@@ -100,16 +109,11 @@ this.selectedCategory = category;
 onPersonalNext(form:NgForm) {
   //store the dates in 
     if (form.valid) {
-// this.service.setDetails({
-//   today: this.personl.today,
-//       employeeCode: this.personl.employeeCode,
-//       purposePlace: this.personl.purposePlace,
-//       companyPlant: this.personl.companyPlant,
-//       costCenter: this.personl.costCenter,
-//       vendorCode: this.personl.vendorCode,
-//       username: this.personl.username
-// })
-
+    this.User.purposePlace=this.User.purposePlace;
+    sessionStorage.setItem('Employee',JSON.stringify(
+      
+      this.User));
+console.log("Formsubmitted",this.User)
   this.showPersonalModal = false;
   if(this.selectedCategory === 'Expense') {
     this.router.navigate(['/expense'])
