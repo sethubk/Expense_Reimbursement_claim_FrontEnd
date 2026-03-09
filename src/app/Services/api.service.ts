@@ -21,7 +21,7 @@ User:Employee={
 this.loadUserFromSession();
 
    }
-  baseurl='https://localhost:7283/api/Auth';
+  baseurl='https://localhost:7283/api/Employee';
 
   Login(data:any):Observable<any>{
     return this.http.post(`${this.baseurl}/Login`,data)
