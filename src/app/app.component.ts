@@ -16,7 +16,6 @@ export class AppComponent {
   user:string='';
   constructor(public authService: ApiService,public router:Router) {
 
-    const Users=this.authService.getCurrentUser
-    this.user=Users.name;
+   
   }
 }

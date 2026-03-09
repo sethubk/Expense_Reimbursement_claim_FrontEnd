@@ -22,14 +22,14 @@ export class NavbarComponent {
   ngOnInit() {
  const userString = sessionStorage.getItem("User");
   
-//  if (userString) {
-//     const userObj = JSON.parse(userString);   // convert string → object
-// console.log("userdasdas",userObj)
-//     this.user = userObj.name;  // or userObj.name depending on your response
-//   }
- const Users=this.authService.User
-    this.user=Users.res;
-    console.log(this.user);
+ if (userString) {
+    const userObj = JSON.parse(userString);   // convert string → object
+console.log("userdasdas",userObj)
+    this.user = userObj.res.name;  // or userObj.name depending on your response
+  }
+//  const Users=this.authService.User
+//     this.user=Users.res;
+//     console.log(this.user);
 
   }
 
