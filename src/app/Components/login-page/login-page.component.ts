@@ -22,6 +22,7 @@ empcode: string = '';
              private router: Router) {}
 
 ngOnInit(){
+
 sessionStorage.clear();
 localStorage.clear()
 }

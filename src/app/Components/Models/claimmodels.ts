@@ -20,3 +20,15 @@ export interface Claims {
   status: 'In progress' | 'Approved' | 'Rejected' | string;
   expense?: string;
 }
+
+export interface FormDataModel {
+  date: string;
+  supportingNo: string;
+  particulars: string;
+  paymentMode: 'Cash' | 'Card' | 'Online' | string;
+  amount: number | null;
+  remarks: string;
+  screenshot: string;
+   preview?: string;
+   fileName?:string
+}

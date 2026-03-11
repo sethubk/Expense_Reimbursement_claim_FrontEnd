@@ -5,6 +5,7 @@ import { ClarityModule } from '@clr/angular';
 import { ApiService } from '../../Services/api.service';
 import { Router } from '@angular/router';
 import { Employee } from '../Models/claimmodels';
+import { ClaimApiService } from '../../Services/claim-api.service';
 
 export interface Expense {
   type: 'International' | 'Domestic' | '' | string;
@@ -31,7 +32,7 @@ export interface Personal{
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
-constructor(private api:ApiService,private router:Router){}
+constructor(private api:ApiService,private router:Router,private ClaimApi:ClaimApiService){}
 username:string='';
 showPersonalModal = false;
 
@@ -47,7 +48,7 @@ personl:Personal={
 }
 
 
-empcode :string ='emp001';
+empcode :string ='';
 dataSource:Expense[]=[
  ];
  
@@ -70,12 +71,12 @@ User:Employee={
 
    this.User=this.api.User;
    this.User.today=today 
+this.empcode=this.User.employeeCode;
 
-
-
+this.getClaimUsingEmpCode();
 
 // this.getEmployees();
-// this.getclaim();
+this.getclaim();
 // this.getFetchclaims();
 
 
@@ -83,19 +84,31 @@ User:Employee={
 }
 
 
-// getclaim(){
-//   this.api.GetEmployeewithClaim(this.empcode).subscribe(
-
-//     res=>{
-// console.log("Claims",res);
-// this.dataSource=(res as any).recentClaims;
-//     }
-//   )
-// }
 
 
-getExpense() {
 
+getClaimUsingEmpCode() {
+    // or this.empCode from form
+  
+  this.ClaimApi.getClaimByEmpCode(this.empcode).subscribe({
+    next: (res) => {
+      console.log("Claim by Code:", res);
+     
+    },
+    error: (err) => {
+      console.error("Error fetching claim:", err);
+    }
+  });
+}
+
+getclaim(){
+  this.api.GetEmployeewithClaim(this.empcode).subscribe(
+
+    res=>{
+console.log("Claims",res);
+this.dataSource=(res as any).recentClaims;
+    }
+  )
 }
 selectedCategory: string | null = null;
 goToPersonalDetails(category: string){
@@ -116,12 +129,13 @@ onPersonalNext(form:NgForm) {
 console.log("Formsubmitted",this.User)
   this.showPersonalModal = false;
   if(this.selectedCategory === 'Expense') {
-    this.router.navigate(['/expense'])
+    this.router.navigate(['/Expense'])
   } 
    if(this.selectedCategory === 'InternationalTravels') {
     this.router.navigate(['/international'])}
      if(this.selectedCategory === 'DomesticTravels') {
     this.router.navigate(['/domestic'])}
+    debugger
     const dto={
   Type:this.selectedCategory,
   

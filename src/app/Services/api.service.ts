@@ -22,6 +22,7 @@ this.loadUserFromSession();
 
    }
   baseurl='https://localhost:7283/api/Employee';
+claimUrl='https://localhost:7283/api/RecentClaim';
 
   Login(data:any):Observable<any>{
     return this.http.post(`${this.baseurl}/Login`,data)
@@ -58,6 +59,16 @@ GetEmployee(){
     const userObj = JSON.parse(user);
     this.User=userObj.res;}
 }
+GetEmployeewithClaim(Empcode:string){
+return this.http.get(`${this.baseurl}/Employee/${Empcode}`)
+}
 
+
+createClaim(empCode: string, dto: any): Observable<any> {
+  return this.http.post(
+    `${this.claimUrl}/create/${empCode}`,
+    dto
+  );
+}
 
 }
