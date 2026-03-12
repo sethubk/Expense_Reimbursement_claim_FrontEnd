@@ -20,3 +20,21 @@ clr-vertical-nav {
   overflow-y: auto;  /* Only content area scrolls */
   padding: 1rem;
 }
+
+
+@media print {
+  app-navbar {
+    display: none !important;
+  }
+
+  /* (Optional) Hide other UI controls when printing */
+  .button-group,
+  .no-print {
+    display: none !important;
+  }
+
+  /* (Optional) Expand content to full width for print */
+  .content {
+    margin: 0 !important;
+  }
+}

@@ -7,6 +7,10 @@ import { ClarityIcons } from '@clr/icons';
 import { ClarityModule } from '@clr/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Employee } from '../../Models/claimmodels';
+import { ApiService } from '../../../Services/api.service';
+import { defaultEquals } from '@angular/core/primitives/signals';
+import { ClaimApiService } from '../../../Services/claim-api.service';
 interface Entry {
   date: string;
   supportingNo: string;
@@ -23,15 +27,26 @@ interface Entry {
   styleUrl: './expensereview.component.css'
 })
 export class ExpensereviewComponent {
-constructor(private service:ExpenseDataService, private router:Router,private TravelService:TravelEntryService){
+constructor(private service:ExpenseDataService,private api:ApiService, private router:Router,
+  private TravelService:TravelEntryService,private ExpenseApi:ExpenseApiService,private ClaimApi:ClaimApiService){
 
  }
+ personalData: Employee={ 
+    today: '',
+   username: '',
+   employeeCode: '',
+   purposePlace: '',
+   companyPlant: '',
+   costCenter: '',
+   venderCost: '',
+  
+ };
  entries:Entry[]=[];
-  personalData: any;
-  ngOnInit(): void {
  
+  ngOnInit(): void {
+ this.personalData=this.api.User;
     this.entries=this.service.getentries();
-    this.personalData = this.service.getDetails();
+   
     console.log(this.entries)
    
    
@@ -85,17 +100,81 @@ printPage() {
 
 // this.router.navigate(['']);
 // }
-submitExpense() {
-   const claim={
-      Status:"PEnding",
-      Amount:this.totalAmount
-   }
-   
+// submitExpense() {
   
+// const raw = this.entries as any[];   // your UI array
 
-  this.router.navigate(['/Home']);
+// const payload = raw.map(e => ({
+//   amount: Number(e.amount ?? 0),
+//   // send ISO or YYYY-MM-DD; both bind, ISO is safest:
+//   date: e.date ? new Date(e.date).toISOString() : new Date().toISOString(),
+//   particulars: e.particulars ?? '',
+//   paymentMode: e.paymentMode ?? '',
+//   remarks: e.remarks ?? '',
+//   supportingNo: e.supportingNo ?? '',
+//   fileName: e.fileName ?? '',                   // keep only if backend DTO has it
+//   screenshot: e.screenshot ?? null              // null accepted if DTO is string?
+// }));
+
+// const claimId=localStorage.getItem("lastClaimId");
+// debugger
+// console.log("submited",this.entries)
+// if (!claimId) {
+//   console.error("No claimId found in localStorage");
+//   return;
+// }
+
+//   this.ExpenseApi.createExpense(claimId,payload).subscribe({
+//     next:(res)=>
+//     console.log("Expense created",res),
+//     error:(res)=> console.log("Expenase failed ")
+// }
+//   )
+//    const claim={
+//       Status:"pending",
+//       Amount:this.totalAmount
+//    }
+// }
+submitExpense(){
+const claimId = localStorage.getItem('lastClaimId');
+if (!claimId) {
+  console.error('No Claim ID found. Create claim first.');
+  return;
 }
 
+const payload = (this.entries ?? []).map((e: any) => ({
+  amount: Number(e.amount),
+  date: e.date ? new Date(e.date).toISOString() : new Date().toISOString(),
+  supportingNo: e.supportingNo ?? "",
+  particulars: e.particulars ?? "",
+  paymentMode: e.paymentMode ?? "",
+  remarks: e.remarks ?? "",
+  fileName: e.fileName ?? "",        // remove if not in DTO
+  screenshot: e.screenshot ?? ""     // send "" or make DTO string?
+}));
+
+this.ExpenseApi.createExpense(claimId, payload).subscribe({
+  next: res => console.log('Expense created', res),
+  error: err => {
+    console.error('Expense ERROR:', err);
+    // check server message here:
+    // console.error('Server says:', err.error);
+  }
+});
+
+const claim={
+      status:"pending",
+      amount:this.totalAmount
+   
+}
+
+this.ClaimApi.updateClaim(this.api.User.employeeCode,claimId,claim).subscribe({
+        next: (res2) => console.log("Claim updated", res2),
+        error: (err2) => console.error("Update claim error", err2)
+      });
+
+// this.router.navigate(['/Homepage']);
+}
 
 showClaimSummary() {
   const summary = `
@@ -108,7 +187,7 @@ showClaimSummary() {
   alert(summary);
 }
 backbtn(){
-  this.router.navigate(['expense'])
+  this.router.navigate(['/Expense'])
 }
 
 }

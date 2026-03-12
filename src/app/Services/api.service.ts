@@ -63,12 +63,12 @@ GetEmployeewithClaim(Empcode:string){
 return this.http.get(`${this.baseurl}/Employee/${Empcode}`)
 }
 
-
 createClaim(empCode: string, dto: any): Observable<any> {
   return this.http.post(
     `${this.claimUrl}/create/${empCode}`,
     dto
   );
 }
+
 
 }

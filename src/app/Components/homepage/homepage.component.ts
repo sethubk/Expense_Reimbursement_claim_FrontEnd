@@ -36,16 +36,6 @@ constructor(private api:ApiService,private router:Router,private ClaimApi:ClaimA
 username:string='';
 showPersonalModal = false;
 
-personl:Personal={
-  today:  '',
-  username:  '',
-  employeeCode:  '',
-  purposePlace:  '',
-  companyPlant : '',
-  costCenter:  '',
-  vendorCode:  '',
-  
-}
 
 
 empcode :string ='';
@@ -126,30 +116,29 @@ onPersonalNext(form:NgForm) {
     sessionStorage.setItem('Employee',JSON.stringify(
       
       this.User));
-console.log("Formsubmitted",this.User)
+         const dto={
+  Type:this.selectedCategory,
+  Purpose:this.User.purposePlace,
+  Amount:0,
+  Status:"Pending",
+}
+
   this.showPersonalModal = false;
   if(this.selectedCategory === 'Expense') {
     this.router.navigate(['/Expense'])
   } 
    if(this.selectedCategory === 'InternationalTravels') {
-    this.router.navigate(['/international'])}
+    this.router.navigate(['/international, claimId'])}
      if(this.selectedCategory === 'DomesticTravels') {
-    this.router.navigate(['/domestic'])}
+    this.router.navigate(['/domestic, claimId'])}
     debugger
-    const dto={
-  Type:this.selectedCategory,
-  
-
-  
-  Purpose:this.personl.purposePlace,
-  Amount:0,
-  Status:"Pending",
-}
-// this.api.createClaim(this.empcode,dto).subscribe(
-//   res=>{
-// console.log("claim created ",res);
-  
-// })
+ this.api.createClaim(this.empcode,dto).subscribe(
+  res=>{
+console.log("claim created ",res);
+  const claimId = res.recentClaimId;
+   localStorage.setItem('lastClaimId', claimId)
+})
+console.log("Formsubmitted",this.User)
 
 }
 
@@ -170,14 +159,14 @@ getStatusClass(status: string): string {
 }
 
 reset(){
-  this.personl={
-  today: this.personl.today,
-  username:  '',
-  employeeCode:  '',
-  purposePlace:  '',
-  companyPlant : '',
-  costCenter:  '',
-  vendorCode:  '',
+  // this.personl={
+  // today: this.personl.today,
+  // username:  '',
+  // employeeCode:  '',
+  // purposePlace:  '',
+  // companyPlant : '',
+  // costCenter:  '',
+  // vendorCode:  '',
   
 }}
-}
+

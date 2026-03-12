@@ -102,6 +102,11 @@ align-items: center;
   .button-group {
     display: none !important;
   }
+  
+ .navbar {
+    display: none !important;
+  }
+
 
 }
 

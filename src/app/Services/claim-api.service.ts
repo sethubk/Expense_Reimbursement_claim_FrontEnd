@@ -17,4 +17,11 @@ export class ClaimApiService {
   }
 
 
+updateClaim(emp:string,claimId: string, claim: any): Observable<any> {
+  return this.http.put(
+    `${this.baseurl}/update/${emp}/${claimId}`,
+    claim
+  );
+}
+
 }
