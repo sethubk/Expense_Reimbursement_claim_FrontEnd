@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { Employee } from '../Components/Models/claimmodels';
 
 @Injectable({
@@ -16,11 +16,12 @@ User:Employee={
   costCenter: '',
   venderCost: ''
 }
-
+displayName: string='';
   constructor(private http:HttpClient) {
 this.loadUserFromSession();
 
    }
+   private USER_NAME_API = 'https://graph.microsoft.com/v1.0/me';
   baseurl='https://localhost:7283/api/Employee';
 claimUrl='https://localhost:7283/api/RecentClaim';
 
@@ -71,4 +72,31 @@ createClaim(empCode: string, dto: any): Observable<any> {
   );
 }
 
+// private async loadUser(): Promise<void> {
+//     try {
+//       // If you're using Windows SSO, withCredentials is required
+//       const user = await firstValueFrom(
+//         this.http.get<Response>(this.USER_NAME_API, { withCredentials: true })
+//       );
+//       this.displayName = user.displayName;
+//     } catch (err) {
+//       console.error('Failed to load user', err);
+//       this.displayName = null; // fail safe
+//     }
+//   }
+user() {
+    return new Promise((resolve, reject) => {
+      this.http.get<any>(this.USER_NAME_API).subscribe({
+        next: (user: any) => {
+          resolve(user.displayName);
+               console.log("Displayname",user);
+        },
+   
+        error: (error) => {
+          console.error(error);
+          reject(error);
+        },
+      });
+    });
+  }
 }

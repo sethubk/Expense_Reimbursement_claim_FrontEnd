@@ -16,8 +16,21 @@ import { ClrVerticalNavModule } from "@clr/angular";
 export class AppComponent {
   title = 'ClaimForm';
   user:string='';
-  constructor(public authService: ApiService,public router:Router) {
+    
+ 
+  
+ 
+  constructor(public authService: ApiService,public router:Router) {}
 
-   
+
+  async ngOnInit(): Promise<void> {
+  debugger
+    var name=this.authService.user();
+    console.log("get user name",name);
+  
   }
+
+  
 }
+
+
