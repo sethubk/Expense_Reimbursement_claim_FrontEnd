@@ -1,0 +1,147 @@
+<div class="page">
+  <nav class="navbar">
+  <div class="navbar-brand">
+    <a>
+      <img src="assets/logo.png" alt="Brand Logo" class="brand-logo">
+            <h1 class="brand-title">Expense reimbursement claim form</h1>
+
+    </a>
+  </div>
+
+</nav>
+<!-- 
+<div class="clr-row">
+  <div class="clr-col-8">
+    <div class="personaldetails">
+      <div *ngIf="personalData" class="personaldata">
+        <div class="data-row"><strong>Date of Submission:</strong><span>{{ personalData.today }}</span></div>
+        <div class="data-row"><strong>Expense Statement of:</strong><span>{{ personalData.username }}</span></div>
+        <div class="data-row"><strong>Employee Code:</strong><span>{{ personalData.employeeCode }}</span></div>
+        <div class="data-row"><strong>Purpose & Place:</strong><span>{{ personalData.purposePlace }}</span></div>
+        <div class="data-row"><strong>Company & Plant:</strong><span>{{ personalData.companyPlant }}</span></div>
+        <div class="data-row"><strong>Cost Center:</strong><span>{{ personalData.costCenter }}</span></div>
+        <div class="data-row"><strong>Vendor Code:</strong><span>{{ personalData.vendorCode }}</span></div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- personal details -->
+  <div class="info-card">
+    <div class="info-card-header">
+      <h3>Personal Details</h3>
+    </div>
+    <div class="info-card-body">
+      <div class="clr-row clr-form clr-form-horizontal">
+        <!-- Row 1 -->
+        <div class="clr-col-4">
+          <clr-input-container>
+            <label>Employee Name : </label>
+            <input clrInput type="text" [value]="personalData.username" readonly />
+          </clr-input-container>
+        </div>
+        <div class="clr-col-4">
+          <clr-input-container>
+            <label>Employee Code : </label>
+            <input clrInput type="text" [value]="personalData.employeeCode" readonly />
+          </clr-input-container>
+        </div>
+        <div class="clr-col-4">
+          <clr-input-container>
+            <label>Cost Center : </label>
+            <input clrInput type="text" [value]="personalData.costCenter" readonly />
+          </clr-input-container>
+        </div>
+ 
+        <!-- Row 2 -->
+        <div class="clr-col-4">
+          <clr-input-container>
+            <label>Company & Plant : </label>
+            <input clrInput type="text" [value]="personalData.companyPlant" readonly />
+          </clr-input-container>
+        </div>
+        <div class="clr-col-4">
+          <clr-input-container>
+            <label>Purpose & Place : </label>
+            <input clrInput type="text" [value]="personalData.purposePlace" readonly />
+          </clr-input-container>
+        </div>
+        <div class="clr-col-4">
+          <clr-input-container>
+            <label>Vendor Code : </label>
+            <input clrInput type="text" [value]="personalData.vendorCode" readonly />
+          </clr-input-container>
+        </div>
+      </div>
+    </div>
+  </div>
+<clr-datagrid *ngIf="entries.length > 0">
+  <clr-dg-column>Sno</clr-dg-column>
+  <clr-dg-column>Date</clr-dg-column>
+  <clr-dg-column>Supporting No</clr-dg-column>
+  <clr-dg-column>Particulars</clr-dg-column>
+  <clr-dg-column>Payment Mode</clr-dg-column>
+  <clr-dg-column>Amount</clr-dg-column>
+  <clr-dg-column>Remarks</clr-dg-column>
+
+  <clr-dg-row *ngFor="let entry of entries; let i = index">
+  <clr-dg-cell>{{ i + 1 }}</clr-dg-cell>
+  <clr-dg-cell>{{ entry.date }}</clr-dg-cell>
+  <clr-dg-cell>{{ entry.supportingNo }}</clr-dg-cell>
+  <clr-dg-cell>{{ entry.particulars }}</clr-dg-cell>
+  <clr-dg-cell>{{ entry.paymentMode }}</clr-dg-cell>
+  <clr-dg-cell>₹{{ entry.amount }}</clr-dg-cell>
+  <clr-dg-cell>{{ entry.remarks }}</clr-dg-cell>
+</clr-dg-row>
+
+<!-- Total row -->
+
+
+
+ 
+  
+</clr-datagrid>
+
+
+
+
+
+<div class="clr-row1">
+  <div class="clr-col-12 clr-col-md-4">
+    <div class="summary-box">
+      <table class="table table-compact">
+        <tbody>
+          <tr>
+            <td>Total Expenses Bill</td>
+            <td>₹{{ totalAmount }}</td>
+          </tr>
+          <tr>
+            <td>Expense Paid by Employee</td>
+            <td>₹{{ totalAmount }}</td>
+          </tr>
+          <tr>
+            <td>Expense Paid by Company</td>
+            <td>₹0</td>
+          </tr>
+          <tr class="highlight">
+            <td>Advance Amount Payable to Employee</td>
+            <td class="green-text">₹{{ totalAmount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="footer">
+<div class="button-group" >
+      <button class="btn btn-info" (click)="backbtn()">back </button>
+
+  <button class="btn btn-primary" (click)="printPage()">Print</button>
+  <button class="btn btn-success" (click)="submitExpense()">Submit</button>
+  
+</div>
+</div>
+
+
+
+
+</div>
