@@ -32,6 +32,11 @@ console.log("userdasdas",userObj)
 //     console.log(this.user);
 
   }
+  
+goHome() {
+  this.router.navigate(['/HomePage']);
+}
+
 
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;

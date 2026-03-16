@@ -94,9 +94,10 @@ getClaimUsingEmpCode() {
 getclaim(){
   this.api.GetEmployeewithClaim(this.empcode).subscribe(
 
-    res=>{
-console.log("Claims",res);
-this.dataSource=(res as any).recentClaims;
+  res=>{
+  console.log("Claims",res);
+ this.dataSource=(res as any).recentClaims;
+ this.dataSource = this.dataSource.filter(c => c.status !== 'Draft' && c.amount!>0 );
     }
   )
 }
@@ -120,7 +121,7 @@ onPersonalNext(form:NgForm) {
   Type:this.selectedCategory,
   Purpose:this.User.purposePlace,
   Amount:0,
-  Status:"Pending",
+  Status:"Draft",
 }
 
   this.showPersonalModal = false;
@@ -159,14 +160,6 @@ getStatusClass(status: string): string {
 }
 
 reset(){
-  // this.personl={
-  // today: this.personl.today,
-  // username:  '',
-  // employeeCode:  '',
-  // purposePlace:  '',
-  // companyPlant : '',
-  // costCenter:  '',
-  // vendorCode:  '',
-  
-}}
-
+this.User.purposePlace=  ''
+}
+}

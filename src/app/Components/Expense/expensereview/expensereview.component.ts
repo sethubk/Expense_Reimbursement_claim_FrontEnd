@@ -135,7 +135,9 @@ printPage() {
 //       Amount:this.totalAmount
 //    }
 // }
+loading = false;
 submitExpense(){
+  this.loading = true;
 const claimId = localStorage.getItem('lastClaimId');
 if (!claimId) {
   console.error('No Claim ID found. Create claim first.');
@@ -172,8 +174,8 @@ this.ClaimApi.updateClaim(this.api.User.employeeCode,claimId,claim).subscribe({
         next: (res2) => console.log("Claim updated", res2),
         error: (err2) => console.error("Update claim error", err2)
       });
-
-// this.router.navigate(['/Homepage']);
+this.loading = false;
+ this.router.navigate(['/Homepage']);
 }
 
 showClaimSummary() {
