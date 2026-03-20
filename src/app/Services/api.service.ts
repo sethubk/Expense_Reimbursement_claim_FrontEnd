@@ -60,12 +60,12 @@ GetEmployee(){
     this.User=userObj.res;}
 }
 GetEmployeewithClaim(Empcode:string){
-return this.http.get(`${this.baseurl}/Employee/${Empcode}`)
+return this.http.get(`${this.baseurl}/${Empcode}`)
 }
 
 createClaim(empCode: string, dto: any): Observable<any> {
   return this.http.post(
-    `${this.claimUrl}/create/${empCode}`,
+    `${this.claimUrl}/${empCode}`,
     dto
   );
 }

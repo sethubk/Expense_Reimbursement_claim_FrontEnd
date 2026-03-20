@@ -13,13 +13,13 @@ export class ClaimApiService {
   
   
  getClaimByEmpCode(empCode: string): Observable<any> {
-    return this.http.get(`${this.baseurl}/claimBycode/${empCode}`);
+    return this.http.get(`${this.baseurl}/${empCode}`);
   }
 
 
 updateClaim(emp:string,claimId: string, claim: any): Observable<any> {
   return this.http.put(
-    `${this.baseurl}/update/${emp}/${claimId}`,
+    `${this.baseurl}/${emp}/${claimId}`,
     claim
   );
 }

@@ -6,6 +6,8 @@ import { ApiService } from '../../Services/api.service';
 import { Router } from '@angular/router';
 import { Employee } from '../Models/claimmodels';
 import { ClaimApiService } from '../../Services/claim-api.service';
+import '@cds/core/progress-circle/register.js';
+
 
 export interface Expense {
   type: 'International' | 'Domestic' | '' | string;
@@ -53,8 +55,13 @@ User:Employee={
  
 };
 
+loading = false;
+pendingCalls = 0;
+
+
   ngOnInit(){
-    
+    debugger
+    this.loading = true; 
     const now = new Date();
     const today= now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     
@@ -62,7 +69,7 @@ User:Employee={
    this.User=this.api.User;
    this.User.today=today 
 this.empcode=this.User.employeeCode;
-
+// this.pendingCalls = 2;
 this.getClaimUsingEmpCode();
 
 // this.getEmployees();
@@ -73,6 +80,13 @@ this.getclaim();
 
 }
 
+
+decreasePending() {
+  this.pendingCalls--;
+  if (this.pendingCalls === 0) {
+    this.loading = false;  // hide spinner
+  }
+}
 
 
 
@@ -88,6 +102,11 @@ getClaimUsingEmpCode() {
     error: (err) => {
       console.error("Error fetching claim:", err);
     }
+    
+// complete: () => {
+//       this.decreasePending();
+//     }
+
   });
 }
 
@@ -117,9 +136,12 @@ onPersonalNext(form:NgForm) {
     sessionStorage.setItem('Employee',JSON.stringify(
       
       this.User));
+      const today = new Date().toISOString().split('T')[0];
+
          const dto={
   Type:this.selectedCategory,
   Purpose:this.User.purposePlace,
+  Date:today,
   Amount:0,
   Status:"Draft",
 }

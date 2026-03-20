@@ -16,6 +16,9 @@ import { trashIcon, pencilIcon } from '@cds/core/icon';
 // import { cogIcon } from '@cds/core/icon/shapes/cog.js';
 ClarityIcons.addIcons(cogIcon);
 
+import '@cds/core/progress-circle/register.js';  // <-- REQUIRED
+import '@cds/core/global.min.css';
+
 ClarityIcons.addIcons(trashIcon, pencilIcon);
 import { ClarityIcons, userIcon } from '@cds/core/icon';
 
