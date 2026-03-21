@@ -43,6 +43,7 @@ showPersonalModal = false;
 empcode :string ='';
 dataSource:Expense[]=[
  ];
+ allClaims: any[] = [];
  
 User:Employee={
   today: '',
@@ -115,11 +116,19 @@ getclaim(){
 
   res=>{
   console.log("Claims",res);
- this.dataSource=(res as any).recentClaims;
- this.dataSource = this.dataSource.filter(c => c.status !== 'Draft' && c.amount!>0 );
+ this.allClaims=(res as any).recentClaims;
+
+ this.allClaims = this.allClaims.filter(c => c.status !== 'Draft' && c.amount!>0 );
+ this.dataSource=this.allClaims;
     }
   )
 }
+filterByType(type: string) {
+  this.dataSource = this.allClaims.filter(
+    c => c.type?.toLowerCase() === type.toLowerCase()
+  );
+}
+
 selectedCategory: string | null = null;
 goToPersonalDetails(category: string){
   // localStorage.setItem('selectedCategory', category);

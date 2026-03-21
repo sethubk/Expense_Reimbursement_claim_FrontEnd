@@ -162,11 +162,14 @@ clr-input-container input {
   overflow-y: auto;
   display: block;
   margin-top: 20px;
+
+  
 }
 clr-datagrid{
   overflow-y: auto;
   height:400px;
  overflow-x: auto;
+
 }
 
 .main-container{

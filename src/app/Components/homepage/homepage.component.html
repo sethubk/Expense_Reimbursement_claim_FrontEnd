@@ -1,15 +1,15 @@
 <div class="main-container">
   
   <div class="content-container">
-    <!-- <clr-vertical-nav [clrVerticalNavCollapsible]="true" >
+    <clr-vertical-nav [clrVerticalNavCollapsible]="true" >
       
       <clr-vertical-nav-group routerLinkActive="active">
         <a routerLink="#" hidden aria-hidden="true"></a>
 
         Expense
         <clr-vertical-nav-group-children *clrIfExpanded="true">
-          <a clrVerticalNavLink routerLink="./normal/pidgey" routerLinkActive="active">New Expense</a>
-          <a clrVerticalNavLink routerLink="./normal/snorlax" routerLinkActive="active">Exlaims claim</a>
+          <a clrVerticalNavLink routerLinkActive="active" (click)="goToPersonalDetails('DomesticTravels')">New Expense</a>
+          <a clrVerticalNavLink (click)="filterByType('expense')">Exlaims claim</a>
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>
       <clr-vertical-nav-group routerLinkActive="active">
@@ -17,8 +17,8 @@
       
         International
         <clr-vertical-nav-group-children *clrIfExpanded>
-          <a clrVerticalNavLink routerLink="#" routerLinkActive="active">New International</a>
-          <a clrVerticalNavLink routerLink="#" routerLinkActive="active">International claims</a>
+          <a clrVerticalNavLink (click)="goToPersonalDetails('InternationalTravels')">New International</a>
+          <a clrVerticalNavLink (click)="filterByType('international')">International claims</a>
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>
       <clr-vertical-nav-group routerLinkActive="active">
@@ -26,18 +26,18 @@
        
         Domestic
         <clr-vertical-nav-group-children *clrIfExpanded>
-          <a clrVerticalNavLink routerLink="#" routerLinkActive="active">New Domestic</a>
-          <a clrVerticalNavLink routerLink="#" routerLinkActive="active">Domestic Claims</a>
+          <a clrVerticalNavLink (click)="goToPersonalDetails('DomesticTravels')">New Domestic</a>
+          <a clrVerticalNavLink (click)="filterByType('domestic')">Domestic Claims</a>
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>
-      <a clrVerticalNavLink routerLinkActive="active" routerLink="./dashboard">
+      <a clrVerticalNavLink  routerLink="/dashboard" routerLinkActive="active">
        
         Dashboard
       </a>
-    </clr-vertical-nav> -->
+    </clr-vertical-nav>
     <!-- right side -->
     <div class="content-area">
-      <!-- <h3>Welcome! {{username}}</h3> -->
+      <h3>Welcome! {{username}}</h3>
      <div class="header1">
   <h1>Expense reimbursement claim form </h1>
 </div>

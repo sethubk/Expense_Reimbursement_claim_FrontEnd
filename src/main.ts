@@ -1,32 +1,33 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
-import { importProvidersFrom } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
-import { provideRouter } from '@angular/router';   // ✅ for routing
-import { routes } from './app/app.routes';         // ✅ import your routes array
+import { provideRouter } from '@angular/router';
+import { routes } from './app/app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { cogIcon } from '@cds/core/icon/shapes/cog.js';
 import { appConfig } from './app/app.config';
-import { trashIcon, pencilIcon } from '@cds/core/icon';
-// Optional: Clarity imports if you use Clarity Design System
-// import '@cds/core/styles';
-// import '@cds/core/button/register.js';
-// import '@cds/core/icon/register.js';
-// import { ClarityIcons } from '@cds/core/icon';
-// import { cogIcon } from '@cds/core/icon/shapes/cog.js';
-ClarityIcons.addIcons(cogIcon);
 
-import '@cds/core/progress-circle/register.js';  // <-- REQUIRED
+// ✅ Clarity Icons
+import { ClarityIcons } from '@cds/core/icon';
+import { cogIcon } from '@cds/core/icon/shapes/cog.js';
+import { trashIcon, pencilIcon, userIcon } from '@cds/core/icon';
+
+// ✅ Charts (IMPORTANT)
+import 'chart.js/auto';
+
+// ✅ Clarity styles
 import '@cds/core/global.min.css';
+import '@cds/core/progress-circle/register.js';
 
-ClarityIcons.addIcons(trashIcon, pencilIcon);
-import { ClarityIcons, userIcon } from '@cds/core/icon';
+// Register icons
+ClarityIcons.addIcons(cogIcon, trashIcon, pencilIcon, userIcon);
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(),
     provideRouter(routes),
-     [provideAnimations(), ...appConfig.providers] ,
-      // ✅ register routes here
+    provideAnimations(),
+
+    // ✅ FIX: spread providers properly
+    ...appConfig.providers
   ]
 }).catch(err => console.error(err));
