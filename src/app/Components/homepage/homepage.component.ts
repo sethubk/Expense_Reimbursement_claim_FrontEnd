@@ -60,7 +60,7 @@ pendingCalls = 0;
 
 
   ngOnInit(){
-    debugger
+   
     this.loading = true; 
     const now = new Date();
     const today= now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });

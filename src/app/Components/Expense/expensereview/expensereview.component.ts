@@ -173,9 +173,15 @@ const claim={
 this.ClaimApi.updateClaim(this.api.User.employeeCode,claimId,claim).subscribe({
         next: (res2) => console.log("Claim updated", res2),
         error: (err2) => console.error("Update claim error", err2)
+         
       });
 this.loading = false;
- this.router.navigate(['/Homepage']);
+
+
+this.router.navigate(['/Homepage']).then(() => {
+  setTimeout(() => window.location.reload(), 50);
+});
+
 }
 
 showClaimSummary() {
