@@ -193,4 +193,8 @@ getStatusClass(status: string): string {
 reset(){
 this.User.purposePlace=  ''
 }
+
+godash(){
+  this.router.navigate(['./dashboard'])
+}
 }

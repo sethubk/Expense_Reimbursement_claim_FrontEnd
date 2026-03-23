@@ -10,7 +10,7 @@ import 'chart.js/auto';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [ClarityModule,CommonModule,FormsModule,NgChartsModule],
+  imports: [ClarityModule,CommonModule,FormsModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
