@@ -21,8 +21,8 @@ User:Employee={
 this.loadUserFromSession();
 
    }
-  baseurl='https://localhost:7283/api/Employee';
-claimUrl='https://localhost:7283/api/RecentClaim';
+  baseurl='https://localhost:7149/api/Employee';
+claimUrl='https://localhost:7149/api/RecentClaim';
 
   Login(data:any):Observable<any>{
     return this.http.post(`${this.baseurl}/Login`,data)
@@ -53,12 +53,12 @@ console.log("USers from session ",userObj)
 //    return this.currentUserSubject.value;
 //  }
  
-GetEmployee(){
-  const user=sessionStorage.getItem('Employee');
-   if (user) {
-    const userObj = JSON.parse(user);
-    this.User=userObj.res;}
-}
+// GetEmployee(){
+//   const user=sessionStorage.getItem('Employee');
+//    if (user) {
+//     const userObj = JSON.parse(user);
+//     this.User=userObj.res;}
+// }
 GetEmployeewithClaim(Empcode:string){
 return this.http.get(`${this.baseurl}/${Empcode}`)
 }

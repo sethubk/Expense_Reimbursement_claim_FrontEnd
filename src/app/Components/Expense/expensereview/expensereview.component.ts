@@ -137,6 +137,7 @@ printPage() {
 // }
 loading = false;
 submitExpense(){
+  debugger
   this.loading = true;
 const claimId = localStorage.getItem('lastClaimId');
 if (!claimId) {

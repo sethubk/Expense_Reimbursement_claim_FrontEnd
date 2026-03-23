@@ -70,7 +70,7 @@ pendingCalls = 0;
    this.User.today=today 
 this.empcode=this.User.employeeCode;
 // this.pendingCalls = 2;
-this.getClaimUsingEmpCode();
+// this.getClaimUsingEmpCode();
 
 // this.getEmployees();
 this.getclaim();

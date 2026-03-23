@@ -9,7 +9,7 @@ export class ClaimApiService {
 
   constructor(private http:HttpClient) { }
 
-  baseurl='https://localhost:7283/api/RecentClaim';
+  baseurl='https://localhost:7149/api/RecentClaim';
   
   
  getClaimByEmpCode(empCode: string): Observable<any> {
