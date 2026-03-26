@@ -51,7 +51,7 @@ localStorage.clear()
        console.log("success",res)
      },
      error: (err) => {
-       this.errorMessage = err.error.message || 'Invalid Login';
+       this.errorMessage = err.error || 'Invalid Login';
      }
    });
  }

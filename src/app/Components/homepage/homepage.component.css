@@ -174,6 +174,25 @@ clr-datagrid{
   
  
 }
+/* Center the spinner on the screen */
+.spinner-container {
+  position: fixed;          /* stays in center even when scrolling */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7); /* transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;            /* keep above all content */
+}
+
+/* Optional: blur background content */
+.content.blur {
+  filter: blur(4px);
+  pointer-events: none;
+}
 
 /* .content-container {
   display: flex;
