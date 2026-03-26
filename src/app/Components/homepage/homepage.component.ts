@@ -76,7 +76,7 @@ this.getClaimUsingEmpCode();
 // this.getEmployees();
 this.getclaim();
 // this.getFetchclaims();
-
+this.username=this.User.username;
 
 
 }
