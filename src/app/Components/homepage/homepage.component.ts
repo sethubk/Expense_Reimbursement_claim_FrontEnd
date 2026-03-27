@@ -131,9 +131,7 @@ personalForm = new FormGroup({
   purposePlace: new FormControl('', Validators.required)
 });
 goToPersonalDetails(category: string){
-  // localStorage.setItem('selectedCategory', category);
-  // this.router.navigate(['/personal'])
-
+ 
 this.selectedCategory = category;
     this.showPersonalModal = true;
 
