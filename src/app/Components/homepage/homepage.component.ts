@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule ,NgForm} from '@angular/forms';
+import { FormsModule ,NgForm,FormGroup,FormControl,Validators, ReactiveFormsModule} from '@angular/forms';
 import { ClarityModule } from '@clr/angular';
 import { ApiService } from '../../Services/api.service';
 import { Router } from '@angular/router';
@@ -29,7 +29,7 @@ export interface Personal{
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [CommonModule,ClarityModule,FormsModule],
+  imports: [CommonModule,ClarityModule,FormsModule,ReactiveFormsModule],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
@@ -56,13 +56,13 @@ User:Employee={
  
 };
 
-loading = false;
+isLoading = false;
 pendingCalls = 0;
 
 
   ngOnInit(){
-    debugger
-    this.loading = true; 
+   this.isLoading = true;
+   
     const now = new Date();
     const today= now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     
@@ -76,16 +76,16 @@ this.getClaimUsingEmpCode();
 // this.getEmployees();
 this.getclaim();
 // this.getFetchclaims();
-this.username=this.User.username;
 
+this.isLoading=false
 
 }
 
 
-decreasePending() {
-  this.pendingCalls--;
+checkLoading() {
+ 
   if (this.pendingCalls === 0) {
-    this.loading = false;  // hide spinner
+    this.isLoading = false;  // hide spinner
   }
 }
 
@@ -108,6 +108,7 @@ getClaimUsingEmpCode() {
 //       this.decreasePending();
 //     }
 
+
   });
 }
 
@@ -116,10 +117,13 @@ getclaim(){
 
   res=>{
   console.log("Claims",res);
- this.allClaims=(res as any).recentClaims;
+ this.dataSource=(res as any).recentClaims;
+ this.dataSource = this.dataSource.filter(c => c.status !== 'Draft' && c.amount!>0 );
 
- this.allClaims = this.allClaims.filter(c => c.status !== 'Draft' && c.amount!>0 );
- this.dataSource=this.allClaims;
+ 
+this.pendingCalls--;
+    this.checkLoading();
+
     }
   )
 }
@@ -130,17 +134,23 @@ filterByType(type: string) {
 }
 
 selectedCategory: string | null = null;
+personalForm = new FormGroup({
+  purposePlace: new FormControl('', Validators.required)
+});
 goToPersonalDetails(category: string){
-  // localStorage.setItem('selectedCategory', category);
-  // this.router.navigate(['/personal'])
-
+ 
 this.selectedCategory = category;
     this.showPersonalModal = true;
 
 }
-onPersonalNext(form:NgForm) {
+onPersonalNext() {
   //store the dates in 
-    if (form.valid) {
+    
+ if (this.personalForm.invalid) {
+    this.personalForm.markAllAsTouched();
+    return;
+  }
+ {
     this.User.purposePlace=this.User.purposePlace;
     sessionStorage.setItem('Employee',JSON.stringify(
       
