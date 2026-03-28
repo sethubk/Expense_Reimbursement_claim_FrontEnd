@@ -3,7 +3,7 @@ import { LoginPageComponent } from './Components/login-page/login-page.component
 import { HomepageComponent } from './Components/homepage/homepage.component';
 import { ExpenseComponent } from './Components/Expense/expense/expense.component';
 import { ExpensereviewComponent } from './Components/Expense/expensereview/expensereview.component';
-import { DashboardComponent } from './Components/dashboard/dashboard.component';
+//import { DashboardComponent } from './Components/dashboard/dashboard.component';
 
 export const routes: Routes = [
 
@@ -11,5 +11,5 @@ export const routes: Routes = [
     {path:"Homepage",component:HomepageComponent},
     {path:"Expense",component:ExpenseComponent},
      {path:'expensereview',component:ExpensereviewComponent},
-     {path:'dashboard',component:DashboardComponent}
+     //{path:'dashboard',component:DashboardComponent}
 ];
