@@ -1,20 +1,37 @@
 <div class="login-wrapper">
-    <div class="login-card">
-        <h2 class="title">Expense Claim Portal</h2>
-        <form (ngSubmit)="onLogin()">
-            <label>Enter your email *</label>
-            <input type="text" [(ngModel)]="empcode" name="empcode" required />
-            <label>Password *</label>
-            <input type="password" [(ngModel)]="password" name="password" required />
-            <div class="options">
-                <div>
-                    <input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe" />
-                    <span>Save Password</span>
-                </div>
-                <a href="#">Forgot Password?</a>
-            </div>
-            <button type="submit">Sign In</button>
-            <p class="error">{{errorMessage}}</p>
-        </form>
-    </div>
+  <div class="login-card">
+    
+    <h2 class="title">Expense Claim Portal</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+      <label>Email *</label>
+      <input type="email" formControlName="empcode" />
+
+      <p class="error" *ngIf="loginForm.get('empcode')?.touched && loginForm.get('empcode')?.invalid">
+        Please enter a valid email address.
+      </p>
+
+      <label>Password *</label>
+      <input type="password" formControlName="password" />
+
+      <p class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+        Password must be at least 8 characters, include letters and numbers.
+      </p>
+
+      <div class="options">
+        <div>
+          <input type="checkbox" formControlName="rememberMe" />
+          <span>Save Password</span>
+        </div>
+        <a href="#">Forgot Password?</a>
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid">Sign In</button>
+
+      <p class="error">{{ errorMessage }}</p>
+
+    </form>
+
+  </div>
 </div>

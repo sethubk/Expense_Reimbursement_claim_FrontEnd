@@ -151,7 +151,7 @@ onPersonalNext() {
     return;
   }
  {
-    this.User.purposePlace=this.User.purposePlace;
+    this.User.purposePlace=this.personalForm.value.purposePlace ?? '';
     sessionStorage.setItem('Employee',JSON.stringify(
       
       this.User));
