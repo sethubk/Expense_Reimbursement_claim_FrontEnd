@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule ,NgForm} from '@angular/forms';
+import { FormsModule ,NgForm,FormGroup,FormControl,Validators, ReactiveFormsModule} from '@angular/forms';
 import { ClarityModule } from '@clr/angular';
 import { ApiService } from '../../Services/api.service';
 import { Router } from '@angular/router';
@@ -29,7 +29,7 @@ export interface Personal{
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [CommonModule,ClarityModule,FormsModule],
+  imports: [CommonModule,ClarityModule,FormsModule,ReactiveFormsModule],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
@@ -43,6 +43,7 @@ showPersonalModal = false;
 empcode :string ='';
 dataSource:Expense[]=[
  ];
+ allClaims: any[] = [];
  
 User:Employee={
   today: '',
@@ -55,13 +56,13 @@ User:Employee={
  
 };
 
-loading = false;
+isLoading = false;
 pendingCalls = 0;
 
 
   ngOnInit(){
+   this.isLoading = true;
    
-    this.loading = true; 
     const now = new Date();
     const today= now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
     
@@ -76,15 +77,15 @@ this.empcode=this.User.employeeCode;
 this.getclaim();
 // this.getFetchclaims();
 
-
+this.isLoading=false
 
 }
 
 
-decreasePending() {
-  this.pendingCalls--;
+checkLoading() {
+ 
   if (this.pendingCalls === 0) {
-    this.loading = false;  // hide spinner
+    this.isLoading = false;  // hide spinner
   }
 }
 
@@ -107,6 +108,7 @@ getClaimUsingEmpCode() {
 //       this.decreasePending();
 //     }
 
+
   });
 }
 
@@ -117,22 +119,39 @@ getclaim(){
   console.log("Claims",res);
  this.dataSource=(res as any).recentClaims;
  this.dataSource = this.dataSource.filter(c => c.status !== 'Draft' && c.amount!>0 );
+
+ 
+this.pendingCalls--;
+    this.checkLoading();
+
     }
   )
 }
-selectedCategory: string | null = null;
-goToPersonalDetails(category: string){
-  // localStorage.setItem('selectedCategory', category);
-  // this.router.navigate(['/personal'])
+filterByType(type: string) {
+  this.dataSource = this.allClaims.filter(
+    c => c.type?.toLowerCase() === type.toLowerCase()
+  );
+}
 
+selectedCategory: string | null = null;
+personalForm = new FormGroup({
+  purposePlace: new FormControl('', Validators.required)
+});
+goToPersonalDetails(category: string){
+ 
 this.selectedCategory = category;
     this.showPersonalModal = true;
 
 }
-onPersonalNext(form:NgForm) {
+onPersonalNext() {
   //store the dates in 
-    if (form.valid) {
-    this.User.purposePlace=this.User.purposePlace;
+    
+ if (this.personalForm.invalid) {
+    this.personalForm.markAllAsTouched();
+    return;
+  }
+ {
+    this.User.purposePlace=this.personalForm.value.purposePlace ?? '';
     sessionStorage.setItem('Employee',JSON.stringify(
       
       this.User));
@@ -183,5 +202,9 @@ getStatusClass(status: string): string {
 
 reset(){
 this.User.purposePlace=  ''
+}
+
+godash(){
+  this.router.navigate(['./dashboard'])
 }
 }
